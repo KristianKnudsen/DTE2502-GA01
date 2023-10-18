@@ -98,6 +98,7 @@ def accuracy_test(model, dataloader: Iterable, device: torch.device):
                     mx = temp
                     pred_word = w
 
+            print(f"target: {target_word} pred: {pred_word}")
             Predictions.append((samples[i], target_word, pred_word))
 
             if pred_word == target_word:

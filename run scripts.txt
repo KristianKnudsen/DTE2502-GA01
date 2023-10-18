@@ -4,10 +4,7 @@ python main.py --mode train --model PHOSCnet_temporalpooling --train_csv ./dte25
 
 test
 
-python main.py --mode test \
---model PHOSCnet_temporalpooling \
---pretrained_weights PHOSCnet_temporalpooling/epochxx.pt \
---test_csv_seen ./dte2502_ga01/test_seen.csv \
---test_folder_seen ./dte2502_ga01/test_seen \
---test_csv_unseen ./dte2502_ga01/test_unseen.csv \
---test_folder_unseen ./dte2502_ga01/test_unseen
+python main.py --mode test --model PHOSCnet_temporalpooling --pretrained_weights PHOSCnet_temporalpooling/epoch30.pt --test_csv_seen ./dte2502_ga01_small/test_seen.csv --test_folder_seen ./dte2502_ga01_small/test_seen --test_csv_unseen ./dte2502_ga01_small/test_unseen.csv --test_folder_unseen ./dte2502_ga01_small/test_unseen
+
+
+.
