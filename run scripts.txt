@@ -1,0 +1,13 @@
+train
+
+python main.py --mode train --model PHOSCnet_temporalpooling --train_csv ./dte2502_ga01_small/train.csv --train_folder ./dte2502_ga01_small/train --valid_csv ./dte2502_ga01_small/valid.csv --valid_folder ./dte2502_ga01_small/valid
+
+test
+
+python main.py --mode test \
+--model PHOSCnet_temporalpooling \
+--pretrained_weights PHOSCnet_temporalpooling/epochxx.pt \
+--test_csv_seen ./dte2502_ga01/test_seen.csv \
+--test_folder_seen ./dte2502_ga01/test_seen \
+--test_csv_unseen ./dte2502_ga01/test_unseen.csv \
+--test_folder_unseen ./dte2502_ga01/test_unseen
