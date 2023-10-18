@@ -31,6 +31,7 @@ class phosc_dataset(Dataset):
             # Places the arrays after eachother.
             self.df_all['phosc'] = self.df_all.apply(lambda row: np.concatenate((row['phos'], row['phoc'])), axis=1)
 
+
     def __getitem__(self, index):
         img_path = os.path.join(self.root_dir, self.df_all.iloc[index, 0])
         image = io.imread(img_path)

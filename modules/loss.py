@@ -4,7 +4,6 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 
-
 class PHOSCLoss(nn.Module):
     def __init__(self, phos_w=4.5, phoc_w=1):
         super().__init__()
@@ -12,11 +11,6 @@ class PHOSCLoss(nn.Module):
         self.phos_w = phos_w
         self.phoc_w = phoc_w
 
-    # y represents a dictionary containing the model predictions
-    # It has keys for values phos and phoc.
-    # The targets has the actual values the model is supposed to reach.
-    # these are in Tensor format and has values for the phosc features.
-    # therefore we have to split this up in accordance to the length of the phos and the phoc from the dict.
     def forward(self, y: dict, targets: torch.Tensor):
         # Model predictions
         phos_output = y['phos']

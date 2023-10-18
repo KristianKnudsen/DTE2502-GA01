@@ -3,6 +3,3 @@
 This is a PHOSCnet version for recognizing handwritten words in images based on the PHOSCnet from the paper: *Anuj Rai, Narayanan C. Krishnan, Sukalpa Chanda:
 Pho(SC)Net: An Approach Towards Zero-shot Word Image Recognition in Historical Documents. ICDAR (1) 2021: page:19-33* which will be used in the assignment.
 
-# DTE2502-GA01
-# DTE2502-GA01
-# DTE2502-GA01
