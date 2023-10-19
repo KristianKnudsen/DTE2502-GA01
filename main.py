@@ -39,7 +39,7 @@ def get_args_parser():
     parser.add_argument('--test_folder_unseen', type=str, help='The unseen test root folder')
 
     # Dataloader settings
-    parser.add_argument('--batch_size', type=int, default=256, help='number of samples per iteration in the epoch')
+    parser.add_argument('--batch_size', type=int, default=32, help='number of samples per iteration in the epoch')
     parser.add_argument('--num_workers', default=10, type=int)
 
     # optimizer settings

@@ -54,50 +54,33 @@ def train_one_epoch(model: torch.nn.Module, criterion: PHOSCLoss,
 # tensorflow accuracy function, modified for pytorch
 @torch.no_grad()
 def accuracy_test(model, dataloader: Iterable, device: torch.device):
-    # set in model in training mode
     model.eval()
-
-    # gets the dataframe with all images, words and word vectors
     df = dataloader.dataset.df_all
-
-    # gets the word map dictionary
     word_map = get_map_dict(list(set(df['Word'])))
-
-    # number of correct predicted
+    word_map = {w: torch.tensor(word_map[w]).to(device) for w in word_map}
+    word_map_keys = list(word_map.keys())
+    word_map_values = torch.stack(list(word_map.values()))
     n_correct = 0
     no_of_images = len(df)
-
-    # accuracy per word length
     acc_by_len = dict()
-
-    # number of words per word length
     word_count_by_len = dict()
 
-    # fills up the 2 described dictionaries over
     for w in df['Word'].tolist():
         acc_by_len[len(w)] = 0
         word_count_by_len[len(w)] = 0
 
-    # Predictions list
     Predictions = []
 
     for samples, targets, words in dataloader:
         samples = samples.to(device)
-
         vector_dict = model(samples)
         vectors = torch.cat((vector_dict['phos'], vector_dict['phoc']), dim=1)
 
         for i in range(len(words)):
             target_word = words[i]
-            pred_vector = vectors[i].view(-1, 769)
-            mx = -1
-
-            for w in word_map:
-                temp = torch.cosine_similarity(pred_vector[0, :], torch.tensor(word_map[w]).to(device), dim=0)
-                if temp > mx:
-                    mx = temp
-                    pred_word = w
-
+            pred_vector = vectors[i].unsqueeze(0)
+            cos_sim = torch.cosine_similarity(pred_vector, word_map_values, dim=1)
+            pred_word = word_map_keys[torch.argmax(cos_sim).item()]
             Predictions.append((samples[i], target_word, pred_word))
 
             if pred_word == target_word:
@@ -111,8 +94,8 @@ def accuracy_test(model, dataloader: Iterable, device: torch.device):
             acc_by_len[w] = acc_by_len[w] / word_count_by_len[w] * 100
 
     df = pd.DataFrame(Predictions, columns=["Image", "True Label", "Predicted Label"])
-
     acc = n_correct / no_of_images
 
     return acc, df, acc_by_len
+
 
